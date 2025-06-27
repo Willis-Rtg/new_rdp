@@ -13,9 +13,9 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "no-unused-vars": "off",
+      "no-unused-vars": "warn",
       "@typescript-eslint/no-unused-vars": [
-        "error",
+        "warn",
         {
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_",
@@ -23,6 +23,22 @@ const eslintConfig = [
         },
       ],
     },
+    overrides: [
+      {
+        files: ["*.ts", "*.tsx"],
+        rules: {
+          "no-unused-vars": "off",
+          "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+              argsIgnorePattern: "^_",
+              varsIgnorePattern: "^_",
+              caughtErrorsIgnorePattern: "^_",
+            },
+          ],
+        },
+      },
+    ],
   },
 ];
 
