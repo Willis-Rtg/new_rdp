@@ -1,103 +1,217 @@
+"use client";
+
+import ProductCard from "@/components/product-card";
+import ProductModal from "@/components/product-modal";
+import Chip from "@/public/images/Chip";
+import Lemonade from "@/public/images/Lemonade";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { TProduct } from "./admin/actions";
+import { Brand } from "@prisma/client";
+import { getProducts } from "./actions";
+import { Gugi } from "next/font/google";
+
+const gugi = Gugi({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const brands = [
+  { name: "cu", color: "#0be881" },
+  { name: "gs", color: "#18dcff" },
+  { name: "seven", color: "#ff4d4d" },
+  { name: "emart", color: "#ffd32a" },
+];
+export const categories = [
+  { name: "all", icon: <span>All</span> },
+  {
+    name: "cook",
+    icon: (
+      <Image width={52} height={52} src="/images/breakfast.svg" alt="식품" />
+    ),
+  },
+  {
+    name: "icecream",
+    icon: (
+      <Image
+        width={52}
+        height={52}
+        src="/images/icecream.svg"
+        alt="아이스크림"
+      />
+    ),
+  },
+  {
+    name: "snack",
+    icon: <Chip />,
+  },
+  {
+    name: "juice",
+    icon: <Lemonade />,
+  },
+  {
+    name: "soap",
+    icon: (
+      <Image width={52} height={52} src="/images/soap.svg" alt="목욕용품" />
+    ),
+  },
+  {
+    name: "tissue",
+    icon: (
+      <Image width={52} height={52} src="/images/tissue.svg" alt="생필품" />
+    ),
+  },
+  {
+    name: "candy",
+    icon: <Image width={52} height={52} src="/images/candy.svg" alt="사탕" />,
+  },
+  {
+    name: "etc",
+    icon: <span>기타</span>,
+  },
+];
+export const events = ["all", "onePlus", "twoPlus", "etc"];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [clickProduct, setClickProduct] = useState<TProduct | null>(null);
+  const [selectbrands, setSelectBrands] = useState<string[]>(
+    brands.map((brand) => brand.name)
+  );
+  const [selectedEvent, setSelectedEvent] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const [products, setProducts] = useState<TProduct[]>([]);
+
+  const [input, setInput] = useState<string>("");
+
+  function selectBrand(selectedBrand: string) {
+    setSelectBrands((prevs) => {
+      if (prevs.find((prev: string) => prev === selectedBrand))
+        return prevs.filter((prev: string) => prev != selectedBrand);
+      return [...prevs, selectedBrand];
+    });
+  }
+  function selectEvent(selectedEvent: string) {
+    setSelectedEvent(selectedEvent);
+  }
+  async function getProductsByBrands() {
+    const selectedBrands = selectbrands.map((brand) => brand as Brand);
+    const products = await getProducts(selectedBrands);
+    setProducts(products);
+  }
+
+  useEffect(() => {
+    getProductsByBrands();
+  }, [selectbrands]);
+
+  return (
+    <div className="flex flex-col items-center h-screen py-4 gap-4">
+      <h1 className={`${gugi.className} text-2xl`}>알뜰.편</h1>
+      <div className="flex gap-8 px-1">
+        {brands.map((brand) => (
+          <Image
+            onClick={() => selectBrand(brand.name)}
+            key={brand.name}
+            width={72}
+            height={72}
+            src={`/images/${brand.name}.svg`}
+            alt={brand.name}
+            className={`cursor-pointer rounded-3xl ${
+              selectbrands.find((selectBrand) => brand.name === selectBrand)
+                ? "shadow-xl/30"
+                : ""
+            }`}
+          />
+        ))}
+      </div>
+      <div className="flex gap-2 items-center px-2">
+        {categories.map((category) => (
+          <span
+            onClick={() => setSelectedCategory(category.name)}
+            key={category.name}
+            className={`rounded-full p-1 ${
+              selectedCategory === category.name ? "ring-2 ring-blue-500 " : ""
+            } `}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {category.icon}
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-2 items-center">
+        {events.map((event) => (
+          <span
+            onClick={() => selectEvent(event)}
+            key={event}
+            className={`border border-gray-300 px-8 rounded-4xl ${
+              selectedEvent === event ? "bg-yellow-200" : ""
+            }`}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            {event === "all"
+              ? "All"
+              : event === "onePlus"
+              ? "1+1"
+              : event === "twoPlus"
+              ? "2+1"
+              : "기타"}
+          </span>
+        ))}
+      </div>
+      <input
+        className="text-center bg-gray-100 rounded-xl w-1/2 border-0 ring-0 outline-0"
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="검색"
+      />
+      <div className="flex gap-2 w-full px-2 justify-between h-2/3">
+        {brands.map(
+          (brand) =>
+            selectbrands.find((selectBrand) => brand.name === selectBrand) && (
+              <div
+                key={brand.name}
+                className={`flex flex-col gap-2 items-center border border-[${brand.color}] rounded-xl p-2 `}
+              >
+                <h4 className={`text-[${brand.color}]`}>{brand.name}</h4>
+                <div
+                  className="flex flex-wrap justify-center gap-2 overflow-scroll"
+                  style={{ scrollbarWidth: "none" }}
+                >
+                  {products.map(
+                    (product) =>
+                      product.brand === brand.name &&
+                      (product.event === selectedEvent ||
+                        selectedEvent === "all") &&
+                      (product.category === selectedCategory ||
+                        selectedCategory === "all") &&
+                      product.name.includes(input) && (
+                        <ProductCard
+                          key={product.id}
+                          event={
+                            product.event === "onePlus"
+                              ? "1+1"
+                              : product.event === "twoPlus"
+                              ? "2+1"
+                              : "기타"
+                          }
+                          price={Number(product.price)}
+                          name={product.name}
+                          img={product.img}
+                          onClick={() => {
+                            setClickProduct(product);
+                            setOpenModal(true);
+                          }}
+                        />
+                      )
+                  )}
+                </div>
+              </div>
+            )
+        )}
+      </div>
+      {openModal && (
+        <ProductModal product={clickProduct!} setOpenModal={setOpenModal} />
+      )}
     </div>
   );
 }
