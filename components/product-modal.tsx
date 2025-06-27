@@ -1,10 +1,10 @@
 "use client";
 
-import { TProduct } from "@/app/admin/actions";
+import { IProduct } from "@/app/admin/actions";
 import Image from "next/image";
 
 interface IProductModal {
-  product: TProduct;
+  product: IProduct;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

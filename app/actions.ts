@@ -2,7 +2,7 @@
 
 import { Brand } from "@prisma/client";
 import db from "@/lib/db";
-import { TProduct } from "./admin/actions";
+import { IProduct } from "./admin/actions";
 
 export async function getProducts(selectedBrands: Brand[]) {
   // let mergeList: TProduct[] = [];

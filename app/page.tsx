@@ -6,7 +6,7 @@ import Chip from "@/public/images/Chip";
 import Lemonade from "@/public/images/Lemonade";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { TProduct } from "./admin/actions";
+import { IProduct } from "./admin/actions";
 import { Brand } from "@prisma/client";
 import { getProducts } from "./actions";
 import { Gugi } from "next/font/google";
@@ -74,14 +74,14 @@ export const events = ["all", "onePlus", "twoPlus", "etc"];
 
 export default function Home() {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [clickProduct, setClickProduct] = useState<TProduct | null>(null);
+  const [clickProduct, setClickProduct] = useState<IProduct | null>(null);
   const [selectbrands, setSelectBrands] = useState<string[]>(
     brands.map((brand) => brand.name)
   );
   const [selectedEvent, setSelectedEvent] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const [input, setInput] = useState<string>("");
 

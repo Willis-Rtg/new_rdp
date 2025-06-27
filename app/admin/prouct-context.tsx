@@ -1,11 +1,11 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { TProduct } from "./actions";
+import { IProduct } from "./actions";
 
 export interface IProductContext {
-  productsState: TProduct[];
-  setProductsState: React.Dispatch<React.SetStateAction<TProduct[]>>;
+  productsState: IProduct[];
+  setProductsState: React.Dispatch<React.SetStateAction<IProduct[]>>;
 }
 
 export const ProductContext = createContext<IProductContext>({
@@ -18,7 +18,7 @@ export function ProductContextProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [productsState, setProductsState] = useState<TProduct[]>([]);
+  const [productsState, setProductsState] = useState<IProduct[]>([]);
   return (
     <ProductContext.Provider value={{ productsState, setProductsState }}>
       {children}

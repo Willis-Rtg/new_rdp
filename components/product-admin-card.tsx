@@ -1,6 +1,6 @@
 "use client";
 
-import { TProduct } from "@/app/admin/actions";
+import { IProduct } from "@/app/admin/actions";
 import { useProductContext } from "@/app/admin/prouct-context";
 import { categories } from "@/app/page";
 import { Brand, Category } from "@prisma/client";

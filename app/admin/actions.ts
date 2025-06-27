@@ -5,7 +5,7 @@ import { Brand, Category } from "@prisma/client";
 import * as cheerio from "cheerio";
 import { redirect } from "next/navigation";
 
-export type TProduct = {
+export interface IProduct {
   id?: number;
   name: string;
   event: string;
@@ -13,11 +13,11 @@ export type TProduct = {
   img: string;
   brand?: Brand;
   category?: Category;
-};
+}
 
 export const getCu = async () => {
-  let prodList: TProduct[] = [];
-  const mergeList: TProduct[] = [];
+  let prodList: IProduct[] = [];
+  const mergeList: IProduct[] = [];
 
   async function getProducts(pageIndex: number) {
     const params = new URLSearchParams({
@@ -74,7 +74,7 @@ export const getCu = async () => {
 };
 
 export const getGs = async () => {
-  const gsList: TProduct[] = [];
+  const gsList: IProduct[] = [];
   const params = new URLSearchParams({
     pageSize: "40",
   });
@@ -122,7 +122,7 @@ export const getSeven = async () => {
 
   const doc = cheerio.load(data);
   // console.log(doc("body").html());
-  const prodList: TProduct[] = doc("body > li:not(.btn_more)")
+  const prodList: IProduct[] = doc("body > li:not(.btn_more)")
     .toArray()
     .map((li) => {
       const $li = cheerio.load(li);
@@ -146,8 +146,8 @@ export const getSeven = async () => {
 };
 
 export const getEmart = async () => {
-  const prodList: TProduct[] = [],
-    mergeList: TProduct[] = [];
+  const prodList: IProduct[] = [],
+    mergeList: IProduct[] = [];
 
   await getProducts(1);
 
@@ -163,7 +163,7 @@ export const getEmart = async () => {
 
     const doc = cheerio.load(data);
 
-    const prodList: TProduct[] = doc(".itemWrap")
+    const prodList: IProduct[] = doc(".itemWrap")
       .toArray()
       .map((li) => {
         const $li = cheerio.load(li);
@@ -195,7 +195,7 @@ export const getEmart = async () => {
   return mergeList;
 };
 
-export const saveProducts = async (products: TProduct[]) => {
+export const saveProducts = async (products: IProduct[]) => {
   await db.product.deleteMany({
     where: {
       brand: products[0].brand,

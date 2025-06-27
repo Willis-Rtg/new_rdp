@@ -5,7 +5,7 @@ import Lemonade from "@/public/images/Lemonade";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getCu, getEmart, getGs, getSeven, saveProducts } from "./actions";
-import { TProduct } from "./actions";
+import { IProduct } from "./actions";
 import ProductAdminCard from "@/components/product-admin-card";
 import { Brand } from "@prisma/client";
 import { useProductContext } from "./prouct-context";
@@ -14,11 +14,11 @@ export const loader = async () => {};
 
 export default function Home() {
   const [clickBrand, setClickBrand] = useState<Brand | null>(null);
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const { productsState, setProductsState } = useProductContext();
 
   const getProducts = async (brand: string) => {
-    let products: TProduct[] = [];
+    let products: IProduct[] = [];
     if (brand === "cu") {
       products = await getCu();
     }
