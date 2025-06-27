@@ -16,8 +16,8 @@ export type TProduct = {
 };
 
 export const getCu = async () => {
-  let prodList: TProduct[] = [],
-    mergeList: TProduct[] = [];
+  let prodList: TProduct[] = [];
+  const mergeList: TProduct[] = [];
 
   async function getProducts(pageIndex: number) {
     const params = new URLSearchParams({
@@ -146,7 +146,7 @@ export const getSeven = async () => {
 };
 
 export const getEmart = async () => {
-  let prodList: TProduct[] = [],
+  const prodList: TProduct[] = [],
     mergeList: TProduct[] = [];
 
   await getProducts(1);
