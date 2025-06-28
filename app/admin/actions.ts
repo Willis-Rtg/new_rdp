@@ -22,7 +22,6 @@ export const getCu = async () => {
   async function getProducts(pageIndex: number) {
     const params = new URLSearchParams({
       pageIndex: pageIndex.toString(),
-      listType: "1",
     });
 
     const res = await fetch(
@@ -109,7 +108,6 @@ export const getGs = async () => {
 export const getSeven = async () => {
   const params = new URLSearchParams({
     intPageSize: "40",
-    currentPage: "1",
   });
 
   const res = await fetch(
