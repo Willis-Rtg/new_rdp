@@ -48,8 +48,8 @@ export default function Home() {
       <div className="flex gap-8 px-1">
         <Image
           className="text-[#0be881] border-[#0be881]"
-          onClick={() => {
-            getProducts("cu");
+          onClick={async () => {
+            await getProducts("cu");
             setClickBrand("cu");
           }}
           width={72}
@@ -58,8 +58,8 @@ export default function Home() {
           alt="cu"
         />
         <Image
-          onClick={() => {
-            getProducts("gs");
+          onClick={async () => {
+            await getProducts("gs");
             setClickBrand("gs");
           }}
           className="text-[#18dcff] border-[#18dcff]"
@@ -69,8 +69,8 @@ export default function Home() {
           alt="gs"
         />
         <Image
-          onClick={() => {
-            getProducts("seven");
+          onClick={async () => {
+            await getProducts("seven");
             setClickBrand("seven");
           }}
           className="text-[#ff4d4d] border-[#ff4d4d]"
@@ -80,8 +80,8 @@ export default function Home() {
           alt="seven"
         />
         <Image
-          onClick={() => {
-            getProducts("emart");
+          onClick={async () => {
+            await getProducts("emart");
             setClickBrand("emart");
           }}
           className="text-[#ffd32a] border-[#ffd32a]"
