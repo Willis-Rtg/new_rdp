@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "http",
+        hostname: "tqklhszfkvzk6518638.edge.naverncp.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
         hostname: "cdn2.bgfretail.com",
         port: "",
         pathname: "/**",

@@ -20,19 +20,19 @@ export const getCu = async () => {
   const mergeList: IProduct[] = [];
 
   async function getProducts(pageIndex: number) {
-    const params = new URLSearchParams({
-      pageIndex: pageIndex.toString(),
-    });
+    // const params = new URLSearchParams({
+    //   pageIndex: pageIndex.toString(),
+    // });
 
-    const res = await fetch(
-      `http://cu.bgfretail.com/event/plusAjax.do?${params.toString()}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`http://cu.bgfretail.com/event/plusAjax.do`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pageIndex: pageIndex,
+      }),
+    });
     const data = await res.text();
 
     const doc = cheerio.load(data);
@@ -74,16 +74,19 @@ export const getCu = async () => {
 
 export const getGs = async () => {
   const gsList: IProduct[] = [];
-  const params = new URLSearchParams({
-    pageSize: "40",
-  });
+  // const params = new URLSearchParams({
+  //   pageSize: "40",
+  // });
   const res = await fetch(
-    `http://gs25.gsretail.com/gscvs/ko/products/event-goods-search?${params.toString()}`,
+    `http://gs25.gsretail.com/gscvs/ko/products/event-goods-search`,
     {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        pageSize: "40",
+      }),
     }
   );
   const data = await res.json();
