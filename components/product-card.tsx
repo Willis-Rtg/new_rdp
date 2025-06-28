@@ -14,6 +14,7 @@ export default function ProductCard({
   img,
   ...rest
 }: IProductCart & React.HTMLAttributes<HTMLDivElement>) {
+  console.log(name, img);
   return (
     <div
       {...rest}
@@ -26,6 +27,7 @@ export default function ProductCard({
         height={60}
         src={img}
         alt={name}
+        unoptimized
       />
       <span className="text-[12px] w-[80px] overflow-hidden whitespace-nowrap text-ellipsis text-center">
         {name}
