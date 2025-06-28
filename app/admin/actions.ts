@@ -74,19 +74,19 @@ export const getCu = async () => {
 
 export const getGs = async () => {
   const gsList: IProduct[] = [];
-  // const params = new URLSearchParams({
-  //   pageSize: "40",
-  // });
+  const params = new URLSearchParams({
+    pageSize: "40",
+  });
   const res = await fetch(
-    `http://gs25.gsretail.com/gscvs/ko/products/event-goods-search`,
+    `http://gs25.gsretail.com/gscvs/ko/products/event-goods-search?${params.toString()}`,
     {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        pageSize: "40",
-      }),
+      // body: JSON.stringify({
+      //   pageSize: "40",
+      // }),
     }
   );
   const data = await res.json();
@@ -116,7 +116,13 @@ export const getSeven = async () => {
   const res = await fetch(
     `http://www.7-eleven.co.kr/product/listMoreAjax.asp?${params.toString()}`,
     {
-      method: "GET",
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      // body: JSON.stringify({
+      //   intPageSize: "40",
+      // }),
     }
   );
   const data = await res.text();
