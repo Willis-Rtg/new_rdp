@@ -42,7 +42,13 @@ export default function ProductAdminCard({
   return (
     <div className="flex flex-col items-center justify-center border border-gray-100 rounded-xl overflow-hidden text-ellipsis">
       <span className="text-[10px]">{event}</span>
-      <Image width={60} height={60} src={img} alt={name} objectFit="cover" />
+      <Image
+        className="object-cover"
+        width={60}
+        height={60}
+        src={img}
+        alt={name}
+      />
       <span className="text-[12px] w-[80px] overflow-hidden whitespace-nowrap text-ellipsis text-center">
         {name}
       </span>
