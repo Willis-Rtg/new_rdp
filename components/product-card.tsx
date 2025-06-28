@@ -14,7 +14,6 @@ export default function ProductCard({
   img,
   ...rest
 }: IProductCart & React.HTMLAttributes<HTMLDivElement>) {
-  console.log(name, img);
   return (
     <div
       {...rest}
