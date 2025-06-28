@@ -53,7 +53,7 @@ export default function Home() {
 
   useEffect(() => {
     getProductsByBrands();
-  }, [selectbrands]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center h-screen py-4 gap-4">
