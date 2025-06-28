@@ -48,6 +48,7 @@ export default function ProductAdminCard({
         height={60}
         src={img}
         alt={name}
+        unoptimized
       />
       <span className="text-[12px] w-[80px] overflow-hidden whitespace-nowrap text-ellipsis text-center">
         {name}
