@@ -2,7 +2,7 @@
 
 import { IProduct } from "@/app/admin/actions";
 import { useProductContext } from "@/app/admin/prouct-context";
-import { categories } from "@/app/page";
+import { categories } from "@/app/constants";
 import { Brand, Category } from "@prisma/client";
 import Image from "next/image";
 import { useState } from "react";
