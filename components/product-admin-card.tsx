@@ -31,7 +31,7 @@ export default function ProductAdminCard({
         if (product.name === name) {
           return {
             ...product,
-            category: category as Category,
+            category: (category as Category) || "all",
           };
         }
         return product;
