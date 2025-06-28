@@ -119,7 +119,7 @@ export const getSeven = async () => {
   const res = await fetch(
     `http://www.7-eleven.co.kr/product/listMoreAjax.asp?${params.toString()}`,
     {
-      method: "POST",
+      method: "GET",
       // headers: {
       //   "Content-Type": "application/json",
       // },
