@@ -10,8 +10,6 @@ import ProductAdminCard from "@/components/product-admin-card";
 import { Brand } from "@prisma/client";
 import { useProductContext } from "./prouct-context";
 
-export const loader = async () => {};
-
 export default function Home() {
   const [clickBrand, setClickBrand] = useState<Brand | null>(null);
   const [products, setProducts] = useState<IProduct[]>([]);
