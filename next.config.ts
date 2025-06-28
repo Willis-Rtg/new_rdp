@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    domains: [
+      "new-rdp.vercel.app",
+      "tqklhszfkvzk6518638.edge.naverncp.com",
+      "cdn2.bgfretail.com",
+      "image.woodongs.com",
+      "www.7-eleven.co.kr",
+      "msave.emart24.co.kr",
+    ],
     remotePatterns: [
       {
         protocol: "https",
