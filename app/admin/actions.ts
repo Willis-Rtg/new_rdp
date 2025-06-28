@@ -2,6 +2,7 @@
 
 import db from "@/lib/db";
 import { Brand, Category } from "@prisma/client";
+import axios from "axios";
 import * as cheerio from "cheerio";
 import { redirect } from "next/navigation";
 
@@ -116,21 +117,25 @@ export const getSeven = async () => {
     intPageSize: "40",
   });
 
-  const res = await fetch(
-    `http://www.7-eleven.co.kr/product/listMoreAjax.asp?${params.toString()}`,
-    {
-      method: "GET",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-      // body: JSON.stringify({
-      //   intPageSize: "40",
-      // }),
-    }
+  const data = await axios.get(
+    `http://www.7-eleven.co.kr/product/listMoreAjax.asp?${params.toString()}`
   );
-  const data = await res.text();
 
-  const doc = cheerio.load(data);
+  // const res = await fetch(
+  //   `http://www.7-eleven.co.kr/product/listMoreAjax.asp?${params.toString()}`,
+  //   {
+  //     method: "GET",
+  //     // headers: {
+  //     //   "Content-Type": "application/json",
+  //     // },
+  //     // body: JSON.stringify({
+  //     //   intPageSize: "40",
+  //     // }),
+  //   }
+  // );
+  // const data = await res.text();
+
+  const doc = cheerio.load(data.data);
   // console.log(doc("body").html());
   const prodList: IProduct[] = doc("body > li:not(.btn_more)")
     .toArray()
