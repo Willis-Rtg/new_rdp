@@ -16,6 +16,11 @@ CREATE TABLE "Product" (
     "event" "Event" NOT NULL,
     "price" INTEGER NOT NULL,
     "img" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Product_name_brand_key" ON "Product"("name", "brand");
