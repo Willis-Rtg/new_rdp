@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 //   var prisma: PrismaClient;
 // }
 
-let db: PrismaClient = new PrismaClient();
+const db = new PrismaClient();
 
 // if (typeof window === "undefined") {
 //   if (process.env.NODE_ENV === "production") {
