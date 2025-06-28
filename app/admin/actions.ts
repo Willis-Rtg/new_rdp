@@ -20,19 +20,22 @@ export const getCu = async () => {
   const mergeList: IProduct[] = [];
 
   async function getProducts(pageIndex: number) {
-    // const params = new URLSearchParams({
-    //   pageIndex: pageIndex.toString(),
-    // });
-
-    const res = await fetch(`http://cu.bgfretail.com/event/plusAjax.do`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pageIndex: pageIndex,
-      }),
+    const params = new URLSearchParams({
+      pageIndex: pageIndex.toString(),
     });
+
+    const res = await fetch(
+      `http://cu.bgfretail.com/event/plusAjax.do?${params.toString()}`,
+      {
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify({
+        //   pageIndex: pageIndex,
+        // }),
+      }
+    );
     const data = await res.text();
 
     const doc = cheerio.load(data);
